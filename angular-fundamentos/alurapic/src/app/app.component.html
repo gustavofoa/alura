@@ -1,2 +1,1 @@
-<ap-photo url="https://blog.musicasparamissa.com.br/images/orar-no-monte.jpg" description="Jesus no Monte"></ap-photo>
-<ap-photo url="https://blog.musicasparamissa.com.br/images/cristo-rei.jpg" description="Cristo Rei"></ap-photo>
+<ap-photo *ngFor="let photo of photos" [url]="photo.url" [description]="photo.description"></ap-photo>
