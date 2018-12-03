@@ -1,1 +1,14 @@
-<ap-photos [photos]="photos"></ap-photos>
+<div class="text-center mt-3 mb-3">
+    <form>
+        <input
+            class="rounded"
+            type="search"
+            placeholder="search..."
+            autofocus
+            (keyup)="debounce.next($event.target.value)">
+    </form>
+</div>
+
+<ap-photos [photos]="photos | filterByDescription: filter"></ap-photos>
+
+<ap-load-button [hasMore]="hasMore" (click)="load()"></ap-load-button>
