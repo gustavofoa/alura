@@ -10,7 +10,8 @@
             autofocus>  
         <ap-vmessage 
             *ngIf="loginForm.get('userName').errors?.required"
-            text="User name is required!"></ap-vmessage>
+            text="User name is required!">
+        </ap-vmessage>
     </div>
 
     <div class="form-group">
@@ -21,7 +22,8 @@
             placeholder="password">   
         <ap-vmessage
             *ngIf="loginForm.get('password').errors?.required"
-            text="Password is required!"></ap-vmessage>
+            text="Password is required!">
+        </ap-vmessage>
     </div>
 
     <button 
