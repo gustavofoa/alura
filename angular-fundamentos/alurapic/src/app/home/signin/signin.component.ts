@@ -13,7 +13,6 @@ export class SignInComponent implements OnInit {
 
   loginForm: FormGroup;
   @ViewChild('userNameInput') userNameInput: ElementRef<HTMLInputElement>;
-  @ViewChild('passwordInput') passwordInput: ElementRef;
 
   constructor(
     private formBuilder: FormBuilder, 
@@ -27,6 +26,8 @@ export class SignInComponent implements OnInit {
       userName: ['flavio', Validators.required],
       password: ['123', Validators.required]
     });
+    this.platformDetectorService.isPlatformBrowser() &&
+            this.userNameInput.nativeElement.focus();
   }
 
   login(){

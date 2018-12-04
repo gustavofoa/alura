@@ -14,12 +14,11 @@ import { CoreModule } from './core/core.module';
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
     PhotosModule,
     ErrorsModule,
-    HomeModule,
-    CoreModule
+    CoreModule,
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
