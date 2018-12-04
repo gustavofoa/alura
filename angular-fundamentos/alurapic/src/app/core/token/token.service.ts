@@ -10,7 +10,7 @@ export class TokenService {
   constructor() { }
 
   hasToken(){
-    !!this.getToken();
+    return !!this.getToken();
   }
 
   setToken(token:string){
