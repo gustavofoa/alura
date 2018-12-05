@@ -16,7 +16,10 @@ export class PhotoListComponent implements OnInit {
   currentPage: number = 1;
   userName: string = '';
 
-  constructor(private activatedRoute: ActivatedRoute, private photoService: PhotoService) { }
+  constructor(
+    private activatedRoute: ActivatedRoute, 
+    private photoService: PhotoService
+  ) { }
   
   ngOnInit(): void {
     this.userName = this.activatedRoute.snapshot.params.userName;
