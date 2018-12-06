@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { PhotoService } from '../photo/photo.service';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/alert/alert/alert.service';
+import { AlertService } from 'src/app/shared/components/alert/alert.service';
 import { UserService } from 'src/app/core/user/user.service';
 import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 import { finalize } from 'rxjs/operators';

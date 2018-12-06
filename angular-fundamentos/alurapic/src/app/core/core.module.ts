@@ -5,18 +5,20 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RequestInterceptor } from './auth/request.interceptor';
 import { FooterComponent } from './footer/footer.component';
-import { AlertComponent } from '../shared/alert/alert/alert.component';
+import { LoadingModule } from '../shared/components/loading/loading.module';
+import { AlertModule } from '../shared/components/alert/alert.module';
 
 @NgModule({
-  declarations: [ HeaderComponent, FooterComponent, AlertComponent ],
+  declarations: [ HeaderComponent, FooterComponent ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    AlertModule,
+    LoadingModule
   ],
   exports: [ 
     HeaderComponent,
-    FooterComponent,
-    AlertComponent
+    FooterComponent
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
