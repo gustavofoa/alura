@@ -13,7 +13,7 @@ import { switchMap, tap } from 'rxjs/operators'
 export class PhotoCommentsComponent implements OnInit {
 
   @Input() photoId: number;
-  commentForm: FormGroup
+  commentForm: FormGroup;
 
   comments$: Observable<PhotoComment[]>;
 
