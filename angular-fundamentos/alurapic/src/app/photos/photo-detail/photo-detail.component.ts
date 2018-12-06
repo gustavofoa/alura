@@ -50,4 +50,13 @@ export class PhotoDetailComponent implements OnInit {
       });
   }
 
+  like() {
+    this.photoService
+      .like(this.photoId)
+      .subscribe(liked => {
+        if(liked)
+        this.photo$ = this.photoService.findById(this.photoId);
+      });
+  }
+
 }
