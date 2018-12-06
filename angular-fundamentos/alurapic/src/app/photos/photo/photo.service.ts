@@ -4,8 +4,9 @@ import { Photo } from "./photo";
 import { Observable, of, throwError } from "rxjs";
 import { PhotoComment } from "./photo-comment";
 import { map, catchError } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
-const API = 'http://localhost:3000';
+const API = environment.apiUrl;
 
 @Injectable({providedIn: 'root'})
 export class PhotoService{
