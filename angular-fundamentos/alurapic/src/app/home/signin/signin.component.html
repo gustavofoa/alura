@@ -1,6 +1,6 @@
 <h4 class="text-center">Login</h4>
 
-<form [formGroup]="loginForm" class="form mt-4" (submit)="login()">
+<form #form="ngForm" [formGroup]="loginForm" class="form mt-4" (submit)="login()">
 
     <div class="form-group">
         <input #userNameInput
@@ -9,7 +9,7 @@
             placeholder="user name" 
             autofocus>  
         <ap-vmessage 
-            *ngIf="loginForm.get('userName').errors?.required"
+            *ngIf="loginForm.get('userName').errors?.required && (form.submited || loginForm.get('userName').touched)"
             text="User name is required!">
         </ap-vmessage>
     </div>
@@ -21,7 +21,7 @@
             class="form-control" 
             placeholder="password">   
         <ap-vmessage
-            *ngIf="loginForm.get('password').errors?.required"
+            *ngIf="loginForm.get('password').errors?.required && (form.submited || loginForm.get('password').touched)"
             text="Password is required!">
         </ap-vmessage>
     </div>

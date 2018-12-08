@@ -24,8 +24,8 @@ export class SignInComponent implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
-      userName: ['flavio', Validators.required],
-      password: ['123', Validators.required]
+      userName: ['', Validators.required],
+      password: ['', Validators.required]
     });
     this.platformDetectorService.isPlatformBrowser() &&
             this.userNameInput.nativeElement.focus();
@@ -36,17 +36,18 @@ export class SignInComponent implements OnInit {
     const userName = this.loginForm.get('userName').value;
     const password = this.loginForm.get('password').value;
     
-    this.authService
-      .authenticate(userName, password)
-      .subscribe(
-        () => this.router.navigate(['user', userName]),
-        err => {
-          console.log(err);
-          this.loginForm.reset();
-          this.platformDetectorService.isPlatformBrowser() &&
-            this.userNameInput.nativeElement.focus();
-        }
-      );
+    this.loginForm.valid && !this.loginForm.pending &&
+      this.authService
+        .authenticate(userName, password)
+        .subscribe(
+          () => this.router.navigate(['user', userName]),
+          err => {
+            console.log(err);
+            this.loginForm.reset();
+            this.platformDetectorService.isPlatformBrowser() &&
+              this.userNameInput.nativeElement.focus();
+          }
+        );
 
   }
 
