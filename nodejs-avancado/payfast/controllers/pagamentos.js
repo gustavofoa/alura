@@ -39,7 +39,8 @@ module.exports = function(app) {
                 return;
             }
             console.log('pagamento criado');
-            res.json(pagamento);
+            res.location('/pagamentos/pagamento/' + result.insertId);
+            res.status(201).json(pagamento);
         });
 
     });
