@@ -1,6 +1,8 @@
-var express = require('express');
-var consign = require('consign');
-var bodyParser = require('body-parser');
+var express = require('express')
+    , consign = require('consign')
+    , bodyParser = require('body-parser')
+    , expressValidator = require('express-validator');
+
 
 module.exports = function() {
     var app = express();
@@ -8,8 +10,11 @@ module.exports = function() {
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
 
+    app.use(expressValidator());
+
     consign()
         .include('controllers')
+        .then('persistence')
         .into(app);
 
     return app;
