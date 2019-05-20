@@ -38,9 +38,24 @@ module.exports = function(app) {
                 res.status(500).send(err);
                 return;
             }
+            pagamento.id = result.insertId
             console.log('pagamento criado');
-            res.location('/pagamentos/pagamento/' + result.insertId);
-            res.status(201).json(pagamento);
+            res.location('/pagamentos/pagamento/' + pagamento.id);
+
+            var response = {
+                dados_do_pagamento: pagamento,
+                links: [{
+                    href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
+                    rel: 'confirmar',
+                    method: 'PUT'
+                },{
+                    href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
+                    rel: 'cancelar',
+                    method: 'DELETE'
+                }]
+            };
+
+            res.status(201).json(response);
         });
 
     });
