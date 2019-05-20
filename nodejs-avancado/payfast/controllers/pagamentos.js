@@ -45,4 +45,26 @@ module.exports = function(app) {
 
     });
 
+    app.put('/pagamentos/pagamento/:id', (req, res) => {
+
+        var id = req.params['id'];
+
+        var pagamento = {
+            id: id,
+            status: 'CONFIRMADO'
+        };
+
+        var connection = app.persistence.connectionFactory();
+        var pagamentoDao = new app.persistence.PagamentoDao(connection);
+
+        pagamentoDao.update(pagamento, (error) => {
+            if(error){
+                res.status(500).send(error);
+                return;
+            }
+            res.status(200).send(pagamento);
+        });
+
+    });
+
 }
