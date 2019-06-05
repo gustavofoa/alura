@@ -7,11 +7,11 @@ module.exports = function(app) {
 
     app.post('/pagamentos/pagamento', (req, res) => {
 
-        req.assert('forma_de_pagamento',
+        req.assert('pagamento.forma_de_pagamento',
             "Forma de pagamento é obrigatório")
             .notEmpty();
 
-        req.assert('valor',
+        req.assert('pagamento.valor',
             "Valor é obrigatório e deve ser um número decimal")
             .notEmpty().isFloat();
 
@@ -23,7 +23,7 @@ module.exports = function(app) {
             return;
         }
 
-        var pagamento = req.body;
+        var pagamento = req.body.pagamento;
         console.log("Processando uma requisição de um novo pagamento.");
 
         pagamento.status = 'CRIADO';
@@ -40,22 +40,59 @@ module.exports = function(app) {
             }
             pagamento.id = result.insertId
             console.log('pagamento criado');
-            res.location('/pagamentos/pagamento/' + pagamento.id);
 
-            var response = {
-                dados_do_pagamento: pagamento,
-                links: [{
-                    href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
-                    rel: 'confirmar',
-                    method: 'PUT'
-                },{
-                    href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
-                    rel: 'cancelar',
-                    method: 'DELETE'
-                }]
-            };
+            if(pagamento.forma_de_pagamento === 'cartao'){
+                var cartao = req.body.cartao;
 
-            res.status(201).json(response);
+                var clienteCartoes = new app.services.clienteCartoes();
+                
+                clienteCartoes.autoriza(cartao,
+                    (exception, request, response, retorno) => {
+                        if(exception){
+                            console.log('exception', exception);
+                            res.status(400).json(exception);
+                            return;
+                        }
+                        console.log(retorno);
+
+                        res.location('/pagamentos/pagamento/' + pagamento.id);
+
+                        var response1 = {
+                            dados_do_pagamento: pagamento,
+                            cartao: retorno,
+                            links: [{
+                                href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
+                                rel: 'confirmar',
+                                method: 'PUT'
+                            },{
+                                href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
+                                rel: 'cancelar',
+                                method: 'DELETE'
+                            }]
+                        };
+
+                        res.status(201).json(response1);
+                    });
+
+            } else {//Not credit card
+
+                res.location('/pagamentos/pagamento/' + pagamento.id);
+
+                var response = {
+                    dados_do_pagamento: pagamento,
+                    links: [{
+                        href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
+                        rel: 'confirmar',
+                        method: 'PUT'
+                    },{
+                        href: 'http://localhost:3001/pagamentos/pagamento/' + pagamento.id,
+                        rel: 'cancelar',
+                        method: 'DELETE'
+                    }]
+                };
+
+                res.status(201).json(response);
+            }
         });
 
     });
