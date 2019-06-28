@@ -18,6 +18,7 @@
     "consign": "^0.1.6",
     "express": "^4.17.0",
     "express-validator": "^5.3.1",
+    "memcached": "^2.2.2",
     "mysql": "^2.17.1",
     "restify-clients": "^2.6.6",
     "soap": "^0.27.1"

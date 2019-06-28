@@ -5,6 +5,40 @@ module.exports = function(app) {
         res.send("OK");
     });
 
+    app.get('/pagamentos/pagamento/:id', (req, res) => {
+        var id = req.params.id;
+        console.log('consulta pagamento', id);
+
+        var memcachedClient = app.services.memcachedClient();
+        memcachedClient.get('pagamento-'+id, (err, data) => {
+            if(err || !data){
+                console.log('MISS - chave não encontrada.');
+                var connection = app.persistence.connectionFactory();
+                var pagamentoDao = new app.persistence.PagamentoDao(connection);
+                pagamentoDao.findById(id, (err, pagamento) => {
+                    if(err){
+                        console.log('erro ao consulta pagamento no banco.', err);
+                        res.status(500).send(err);
+                    } else {
+                        console.log('pagamento encontrado', pagamento);
+                        memcachedClient.set('pagamento-'+id, pagamento, 60000, (err) => {
+                            console.log('nova chave adicionada no cache.');
+                        });
+                        res.json(pagamento);
+                    }
+                });
+            } else {
+                console.log('HIT - valor: ', data);
+                res.json(data);
+            }
+        });
+
+        
+        
+        
+
+    })
+
     app.post('/pagamentos/pagamento', (req, res) => {
 
         req.assert('pagamento.forma_de_pagamento',
@@ -40,6 +74,11 @@ module.exports = function(app) {
             }
             pagamento.id = result.insertId
             console.log('pagamento criado');
+
+            var memcachedClient = app.services.memcachedClient();
+            memcachedClient.set('pagamento-'+pagamento.id, pagamento, 60000, (err) => {
+                console.log('nova chave adicionada no cache.');
+            });
 
             if(pagamento.forma_de_pagamento === 'cartao'){
                 var cartao = req.body.cartao;
