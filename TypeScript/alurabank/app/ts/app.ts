@@ -1,5 +1,4 @@
 const controller = new NegociacaoController();
 
-document
-    .querySelector(".form")
-    .addEventListener('submit', controller.adiciona.bind(controller));
+//Teste de comentário que não vai pra produção
+$(".form").submit(controller.adiciona.bind(controller));
