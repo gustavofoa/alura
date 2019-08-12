@@ -28,8 +28,7 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                     this._mensagemView = new index_2.MensagemView('#mensagemView');
                     this._negociacoesView.update(this._negociacoes);
                 }
-                adiciona(event) {
-                    event.preventDefault();
+                adiciona() {
                     let data = new Date(this._inputData.val().replace(/-/g, ','));
                     if (this._ehDiaUtil(data)) {
                         this._mensagemView.update('Somente negociações em dias úteis, por favor.');
@@ -43,6 +42,26 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
                 _ehDiaUtil(data) {
                     return data.getDay() == DiaDaSemana.Sabado || data.getDay() == DiaDaSemana.Domingo;
                 }
+                importaDados() {
+                    function isOk(res) {
+                        if (res.ok) {
+                            return res;
+                        }
+                        else {
+                            throw new Error(res.statusText);
+                        }
+                    }
+                    fetch('http://localhost:8080/dados')
+                        .then(res => isOk(res))
+                        .then(res => res.json())
+                        .then((dados) => {
+                        dados
+                            .map(dado => new index_1.Negociacao(new Date(), dado.vezes, dado.montante))
+                            .forEach(negociacao => this._negociacoes.adiciona(negociacao));
+                        this._negociacoesView.update(this._negociacoes);
+                    })
+                        .catch(err => console.log(err));
+                }
             };
             __decorate([
                 index_3.domInject('#data')
@@ -53,6 +72,12 @@ System.register(["../models/index", "../views/index", "../helpers/decorators/ind
             __decorate([
                 index_3.domInject('#valor')
             ], NegociacaoController.prototype, "_inputValor", void 0);
+            __decorate([
+                index_3.throttle()
+            ], NegociacaoController.prototype, "adiciona", null);
+            __decorate([
+                index_3.throttle()
+            ], NegociacaoController.prototype, "importaDados", null);
             exports_1("NegociacaoController", NegociacaoController);
             (function (DiaDaSemana) {
                 DiaDaSemana[DiaDaSemana["Domingo"] = 0] = "Domingo";
