@@ -72,12 +72,12 @@ class Conta(
     }
 
     fun transfere(valor: Double, destino: Conta): Boolean {
-        if(saldo >= valor) {
+        return if(saldo >= valor) {
             saldo -= valor
             destino.deposita(valor)
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 
