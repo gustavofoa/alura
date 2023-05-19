@@ -3,9 +3,6 @@ open class Funcionario(
     val cpf : String,
     val salario: Double
 ) {
-
-    open fun bonificacao(): Double {
-        return this.salario * 0.1
-    }
+    open val bonificacao: Double get() = this.salario * 0.1
 
 }
