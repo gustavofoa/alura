@@ -4,7 +4,7 @@ class Diretor(
     salario: Double,
     senha: Int,
     val plr: Double
-) : Gerente(nome = nome, cpf = cpf, salario = salario, senha = senha) {
-    override val bonificacao: Double get() = super.bonificacao + this.plr
+) : FuncionarioAdmin(nome = nome, cpf = cpf, salario = salario, senha = senha) {
+    override val bonificacao: Double get() = this.salario * 0.1 + this.salario + this.plr
 
 }
