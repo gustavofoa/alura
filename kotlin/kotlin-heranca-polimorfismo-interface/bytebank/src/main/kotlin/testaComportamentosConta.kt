@@ -1,7 +1,7 @@
 fun testaComportamentosConta() {
-    val contaJoao = Conta(titular = "João", numero = 1000)
+    val contaJoao = ContaCorrente(titular = "João", numero = 1000)
     println("Conta criada ${contaJoao.titular} - ${contaJoao.numero}")
-    val contaMaria = Conta("Maria", 1001)
+    val contaMaria = ContaPoupanca("Maria", 1001)
     println("Conta criada ${contaMaria.titular} - ${contaMaria.numero}")
 
 
