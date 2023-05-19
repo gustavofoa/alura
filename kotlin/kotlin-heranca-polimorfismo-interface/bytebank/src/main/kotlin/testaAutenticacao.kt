@@ -23,5 +23,5 @@ fun testaAutenticacao() {
     val sistemaInterno = SistemaInterno()
     sistemaInterno.entra(funcionarioAdmin = gerente, senha = 1001)
     sistemaInterno.entra(funcionarioAdmin = diretor, senha = 2000)
-//    sistemaInterno.entra(funcionarioAdmin = cliente, senha = 3000)
+    sistemaInterno.entra(funcionarioAdmin = cliente, senha = 3000)
 }
