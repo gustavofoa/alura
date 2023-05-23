@@ -1,10 +1,15 @@
-import br.com.alura.bytebank.teste.testaAutenticacao
-import br.com.alura.bytebank.teste.testaComportamentosConta
-import br.com.alura.bytebank.teste.testaContasDiferentes
+import br.com.alura.bytebank.modelo.*
 
 fun main() {
 
-    testaContasDiferentes()
+    val gustavo = Cliente(nome = "Gustavo", cpf = "", senha =- 1)
+
+    ContaPoupanca(titular = gustavo, numero = 1000)
+    ContaCorrente(titular = gustavo, numero = 1000)
+
+//    testaContasDiferentes()
+
+    println(Conta.total)
 
 }
 

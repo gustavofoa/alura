@@ -1,11 +1,21 @@
 package br.com.alura.bytebank.modelo
 
+
+
 open class Conta(
     val titular: Cliente,
     val numero: Int
 ) {
     var saldo = 0.0
         private set
+    companion object {
+        var total = 0
+            private set
+    }
+
+    init {
+        total++
+    }
 
     fun deposita(valor: Double) {
         if(valor > 0)
